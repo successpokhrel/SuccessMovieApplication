@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 import CustomHeader from "./components/CustomComponents/CustomHeader";
 import { api_key } from "../secrets/keys";
-import LatestMovieType from "../types/MovieTypes";
+import {LatestMovieType} from "../types/MovieTypes";
 import CustomCard from "./components/CustomComponents/CustomCard";
 
 function App() {
@@ -66,13 +66,7 @@ function App() {
             releaseDate={
               movie ? movie.release_date : "Overview of the movie is loading"
             }
-            footerContent={
-              movie
-                ? movie.adult
-                  ? "Adult Movie"
-                  : "Not an adult movie"
-                : "Unknown"
-            }
+            movieId={movie.id.toString()}
           />
         ))}
       </div>
