@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import CustomHeader from "./components/CustomComponents/CustomHeader";
-import { api_key } from "../secrets/keys";
+import  api_key  from "../secrets/keys";
 import {LatestMovieType} from "../types/MovieTypes";
 import CustomCard from "./components/CustomComponents/CustomCard";
 

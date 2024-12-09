@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { api_key } from "../../secrets/keys";
+import  api_key  from "../../secrets/keys";
 import { SingleMovieType } from "../../types/MovieTypes"
 
 const SingleMovie = () => {
