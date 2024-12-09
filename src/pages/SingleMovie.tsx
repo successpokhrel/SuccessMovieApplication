@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import  api_key  from "../../secrets/keys";
+import  {api_key}  from "../../secrets/keys";
 import { SingleMovieType } from "../../types/MovieTypes"
+import { Button } from "@/components/ui/button"
+import { LuBookmarkPlus, LuList } from "react-icons/lu";
+ 
 
 const SingleMovie = () => {
     const [movie, setMovie] = useState<SingleMovieType | null>(null);
@@ -45,6 +48,11 @@ const SingleMovie = () => {
                     <div className="flex items-center mt-4">
                         <span className="text-xl font-semibold text-yellow-500">{movie.vote_average.toFixed(1)}</span>
                         <span className="ml-2 text-sm text-gray-500">Rating</span>
+                    </div>
+                    <div className="mt-5 flex flex-row gap-3">
+                    <Button variant={'outline'}><LuBookmarkPlus/></Button>
+                    
+                    <Button variant={'outline'}><LuList/></Button>
                     </div>
                 </div>
             </div>

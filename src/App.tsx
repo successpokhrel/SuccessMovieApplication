@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import CustomHeader from "./components/CustomComponents/CustomHeader";
-import  api_key  from "../secrets/keys";
+import  {api_key}  from "../secrets/keys";
 import {LatestMovieType} from "../types/MovieTypes";
 import CustomCard from "./components/CustomComponents/CustomCard";
 
@@ -24,8 +24,9 @@ function App() {
       (res) => res.json()
     );
     setLatestMovie(result);
-    console.log(result);
+    console.log("latest",result);
   };
+  
   const getAllMovies = async () => {
     const result = await fetch(
       `${BaseUrl}/now_playing?language=en-US&page=1&api_key=${api_key}`
