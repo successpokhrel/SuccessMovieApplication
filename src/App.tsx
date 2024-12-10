@@ -4,11 +4,9 @@ import CustomHeader from "./components/CustomComponents/CustomHeader";
 import  {api_key}  from "../secrets/keys";
 import {LatestMovieType} from "../types/MovieTypes";
 import CustomCard from "./components/CustomComponents/CustomCard";
+import { BaseUrl, imageUrl } from "../secrets/urls";
 
 function App() {
-  const BaseUrl = "https://api.themoviedb.org/3/movie";
-  const imageUrl = "https://image.tmdb.org/t/p/w500"
-  // const listMoviesUrl = "https://api.themoviedb.org/3/movie/movie_id/lists"
 
   const [latestMovie, setLatestMovie] = useState<LatestMovieType>();
   const [movies, setMovies] = useState([]);
@@ -16,7 +14,6 @@ function App() {
   useEffect(() => {
     getLatestMovie();
     getAllMovies();
-    // console.log(latestMovie.poster_path)
   }, []);
 
   const getLatestMovie = async () => {

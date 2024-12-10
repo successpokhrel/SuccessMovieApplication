@@ -20,7 +20,7 @@ export default function CustomCard({image, title, releaseDate, movieId}: CardTyp
       ? { backgroundImage: `url(${image})` }
       : { backgroundColor: 'rgba(0, 0, 0, 0.5)' };
   return (
-    <Link to={`/${movieId}`}>
+    <Link to={`/${movieId}`} className="card_link">
       <Card style={backgroundStyle}>
       <CardHeader>
         <CardTitle className="text-white text-xl font-bold drop-shadow-md">{title}</CardTitle>
