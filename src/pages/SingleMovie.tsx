@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router";
-import { SingleMovieType } from "../../types/MovieTypes";
 import { Button } from "@/components/ui/button";
 import { LuBookmarkPlus, LuList } from "react-icons/lu";
 import {
@@ -10,29 +9,22 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { imageUrl } from "../../secrets/urls"
-import {getSingleMovieDetails, getCastDetails} from "../../services/MovieServices"
+import useStore from "../../stores/MovieStore";
 
 const SingleMovie = () => {
-  const [movie, setMovie] = useState<SingleMovieType | null>(null);
-  const [cast, setCast] = useState<any[]>([]);
+
   const params = useParams<{ movieId: string }>();
+  const {movie, cast, getSingleMovieDetails, getCastDetails} = useStore()
 
   useEffect(() => {
-    const HandleSingleMovieApiCalls = async () =>{
-      try{
-        if(params.movieId){
-          const movieResult = await getSingleMovieDetails(params.movieId);
-          const castResult = await getCastDetails(params.movieId);
-          setMovie(movieResult);
-          setCast(castResult);
-        }
+    if(params.movieId)
+      getSingleMovieDetails(params.movieId);
+  }, [params.movieId, getSingleMovieDetails]);
 
-      } catch (err){
-        console.log("Error", err);
-      }
-    }
-    HandleSingleMovieApiCalls();
-  }, [params.movieId]);
+  useEffect(() => {
+    if(params.movieId)
+      getCastDetails(params.movieId);
+  }, [params.movieId, getCastDetails]);
 
   if (!movie) {
     return <div>Loading...</div>;

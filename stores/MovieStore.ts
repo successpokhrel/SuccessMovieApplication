@@ -1,6 +1,11 @@
-import { create } from 'zustand';
-import { getAllMovies, getCastDetails, getLatestMovie, getSingleMovieDetails } from '../services/MovieServices';
-import { LatestMovieType, SingleMovieType } from '../types/MovieTypes';
+import { create } from "zustand";
+import {
+  getAllMovies,
+  getCastDetails,
+  getLatestMovie,
+  getSingleMovieDetails,
+} from "../services/MovieServices";
+import { LatestMovieType, SingleMovieType } from "../types/MovieTypes";
 
 type MovieStore = {
   latestMovie: LatestMovieType | null;
@@ -13,12 +18,13 @@ type MovieStore = {
   getCastDetails: (movieId: string) => Promise<void>;
 };
 
-const store = (set: any) => ({
+const useStore = create<MovieStore>((set) => ({
   latestMovie: null,
   movies: [],
   movie: null,
   cast: [],
   getLatestMovie: async () => {
+    console.log("getLatestMovie>>>");
     try {
       const latestMovie = await getLatestMovie();
       set({ latestMovie });
@@ -49,7 +55,7 @@ const store = (set: any) => ({
     } catch (err) {
       console.log("Error: ", err);
     }
-  }
-});
+  },
+}));
 
-export const useStore = create<MovieStore>(store);
+export default useStore;
