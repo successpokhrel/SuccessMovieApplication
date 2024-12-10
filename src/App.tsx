@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import CustomHeader from "./components/CustomComponents/CustomHeader";
-import  {api_key}  from "../secrets/keys";
 import {LatestMovieType} from "../types/MovieTypes";
 import CustomCard from "./components/CustomComponents/CustomCard";
 import { imageUrl } from "../secrets/urls";
@@ -39,7 +38,7 @@ function App() {
         backgroundImage={
           latestMovie
             ? latestMovie.backdrop_path
-              ? `${imageUrl}${latestMovie.backdrop_path}?api_key=${api_key}`
+              ? `${imageUrl}${latestMovie.backdrop_path}`
               : ""
             : ""
         }
@@ -52,7 +51,7 @@ function App() {
             image={
               movie
                 ? movie.backdrop_path
-                  ? `${imageUrl}${movie.backdrop_path}?api_key=${api_key}`
+                  ? `${imageUrl}${movie.backdrop_path}`
                   : ""
                 : ""
             }

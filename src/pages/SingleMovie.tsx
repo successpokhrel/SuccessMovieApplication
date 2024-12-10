@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { api_key } from "../../secrets/keys";
 import { SingleMovieType } from "../../types/MovieTypes";
 import { Button } from "@/components/ui/button";
 import { LuBookmarkPlus, LuList } from "react-icons/lu";
@@ -10,7 +9,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { BaseUrl, imageUrl } from "../../secrets/urls"
+import { imageUrl } from "../../secrets/urls"
+import {getSingleMovieDetails, getCastDetails} from "../../services/MovieServices"
 
 const SingleMovie = () => {
   const [movie, setMovie] = useState<SingleMovieType | null>(null);
@@ -18,20 +18,21 @@ const SingleMovie = () => {
   const params = useParams<{ movieId: string }>();
 
   useEffect(() => {
-    getMovieDetails();
+    const HandleSingleMovieApiCalls = async () =>{
+      try{
+        if(params.movieId){
+          const movieResult = await getSingleMovieDetails(params.movieId);
+          const castResult = await getCastDetails(params.movieId);
+          setMovie(movieResult);
+          setCast(castResult);
+        }
+
+      } catch (err){
+        console.log("Error", err);
+      }
+    }
+    HandleSingleMovieApiCalls();
   }, [params.movieId]);
-
-  const getMovieDetails = async () => {
-    const movieResponse = await fetch(
-      `${BaseUrl}/${params.movieId}?api_key=${api_key}`
-    ).then((res) => res.json());
-    setMovie(movieResponse);
-
-    const castResponse = await fetch(
-      `${BaseUrl}/${params.movieId}/credits?api_key=${api_key}`
-    ).then((res) => res.json());
-    setCast(castResponse.cast);
-  };
 
   if (!movie) {
     return <div>Loading...</div>;
