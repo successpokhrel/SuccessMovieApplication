@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import { Button } from "@/components/ui/button";
-import { LuBookmarkPlus, LuList } from "react-icons/lu";
+import { LuHeart, LuList } from "react-icons/lu";
 import {
   Tooltip,
   TooltipContent,
@@ -10,11 +10,22 @@ import {
 } from "@/components/ui/tooltip";
 import { imageUrl } from "../../secrets/urls"
 import useStore from "../../stores/MovieStore";
+import usePersonalStore from "../../stores/PersonalStore"
 
 const SingleMovie = () => {
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isInList, setIsInList] = useState(false);
 
   const params = useParams<{ movieId: string }>();
   const {movie, cast, getSingleMovieDetails, getCastDetails} = useStore()
+  const {favorites, watchlist, addToFavorites, addToWatchlist, removeFromFavorites, removeFromWatchlist} = usePersonalStore()
+
+  useEffect(() => {
+    if (movie !== null) {
+      setIsFavorite(favorites.some((favMovie) => favMovie.id === movie.id));
+      setIsInList(watchlist.some((listMovie) => listMovie.id === movie.id));
+    }
+  }, [movie, favorites, watchlist]);
 
   useEffect(() => {
     if(params.movieId)
@@ -25,6 +36,7 @@ const SingleMovie = () => {
     if(params.movieId)
       getCastDetails(params.movieId);
   }, [params.movieId, getCastDetails]);
+
 
   if (!movie) {
     return <div>Loading...</div>;
@@ -61,10 +73,14 @@ const SingleMovie = () => {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="outline"><LuBookmarkPlus /></Button>
+                <Button variant="outline" onClick={
+                    isFavorite? ()=>removeFromFavorites(movie.id) : ()=>addToFavorites(movie)
+                  }>
+                    <LuHeart fill={isFavorite ? "red": "none"} color={isFavorite ? "red": ""}/>
+                  </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Add to Favorites</p>
+                  {isFavorite?<p>Remove from favorites</p>:<p>Add to Favorites</p>}
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -72,10 +88,14 @@ const SingleMovie = () => {
             <TooltipProvider>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <Button variant="outline"><LuList /></Button>
+                  <Button variant="outline" onClick={
+                    isInList? ()=>removeFromWatchlist(movie.id) : ()=>addToWatchlist(movie)
+                  }>
+                    <LuList fill={isInList ? "green" : "none"} color={isInList ? "green" : ""} />
+                  </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Add to Watchlist</p>
+                  {isInList?<p>Remove from watchlist</p>:<p>Add to Watchlist</p>}
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
