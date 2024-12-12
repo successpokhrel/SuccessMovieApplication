@@ -4,15 +4,27 @@ import './index.css'
 import App from './App.tsx'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import SingleMovie from './pages/SingleMovie.tsx'
+import CustomNavbar from './components/CustomComponents/CustomNavbar.tsx'
+import LoginPage from './pages/LoginPage'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App/>
+    element: <CustomNavbar/>,
+    children:[
+      {
+        path: '/',
+        element: <App/>
+      },
+      {
+        path: '/:movieId',
+        element: <SingleMovie/>
+      }
+    ]
   },
   {
-    path: '/:movieId',
-    element: <SingleMovie/>
+    path: '/login',
+    element: <LoginPage/>
   }
 ])
 

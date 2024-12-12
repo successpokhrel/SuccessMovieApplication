@@ -3,18 +3,24 @@ import { SingleMovieType } from '../types/MovieTypes';
 import { devtools, persist } from "zustand/middleware";
 
 interface PersonalStore {
+    username: string | null;
+    isLogged: boolean;
     favorites: SingleMovieType[];
     watchlist: SingleMovieType[];
     addToFavorites: (favoriteMovie: SingleMovieType) => void;
     addToWatchlist: (favoriteMovie: SingleMovieType) => void;
     removeFromFavorites: (movieId: number) => void;
     removeFromWatchlist: (movieId: number) => void;
+    logOut: () => void;
+    logIn:(username: string)=>void;
 }
 
 const usePersonalStore = create<PersonalStore>()(
   devtools(
     persist(
       (set) => ({
+        username: null,
+        isLogged: true,
         favorites: [],
         watchlist: [],
         addToFavorites: (favoriteMovie: SingleMovieType) => {
@@ -53,6 +59,19 @@ const usePersonalStore = create<PersonalStore>()(
             watchlist: store.watchlist.filter((movie) => movie.id !== movieId),
           }));
         },
+        logOut: () => {
+          set(() => ({
+            username: null,
+            isLogged: false
+          }))
+        },
+        logIn: (username: string) => {
+          set(()=>({
+            username: username,
+            isLogged: true
+          }))
+        }
+        
       }),
       {
         name: 'SuccessStore',

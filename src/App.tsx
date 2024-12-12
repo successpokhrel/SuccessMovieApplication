@@ -5,8 +5,12 @@ import {LatestMovieType} from "../types/MovieTypes";
 import CustomCard from "./components/CustomComponents/CustomCard";
 import { imageUrl } from "../secrets/urls";
 import useStore from '../stores/MovieStore'
+// import usePersonalStore from "../stores/PersonalStore";
+
 
 function App() {
+
+  // const {isLogged, username} = usePersonalStore();
 
   const {latestMovie, movies, getLatestMovie, getAllMovies} = useStore()
 
