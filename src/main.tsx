@@ -6,6 +6,10 @@ import { createBrowserRouter, RouterProvider } from 'react-router'
 import SingleMovie from './pages/SingleMovie.tsx'
 import CustomNavbar from './components/CustomComponents/CustomNavbar.tsx'
 import LoginPage from './pages/LoginPage'
+import Favorites from './pages/Favorites.tsx'
+import Watchlists from './pages/Watchlists.tsx'
+import Check from './pages/Check.tsx'
+
 
 const router = createBrowserRouter([
   {
@@ -17,8 +21,20 @@ const router = createBrowserRouter([
         element: <App/>
       },
       {
+        path: '/check',
+        element: <Check />
+      },
+      {
         path: '/:movieId',
         element: <SingleMovie/>
+      },
+      {
+        path: '/favorites',
+        element: <Favorites />
+      },
+      {
+        path: '/watchlist',
+        element: <Watchlists />
       }
     ]
   },
